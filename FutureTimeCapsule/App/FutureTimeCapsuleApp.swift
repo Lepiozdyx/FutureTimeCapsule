@@ -2,9 +2,17 @@ import SwiftUI
 
 @main
 struct FutureTimeCapsuleApp: App {
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if hasCompletedOnboarding {
+                ContentView()
+                    .preferredColorScheme(.dark)
+            } else {
+                OnboardingView()
+                    .preferredColorScheme(.dark)
+            }
         }
     }
 }
