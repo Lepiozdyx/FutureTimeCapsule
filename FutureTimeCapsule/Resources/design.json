@@ -1,0 +1,423 @@
+{
+  "design_system": {
+    "version": "1.0",
+    "description": "Design system for Diamond Power Roadmap app. This file contains all design tokens, patterns, and guidelines to recreate this visual style in any iOS app.",
+    
+    "colors": {
+      "description": "Color palette using hex values. All colors support dark mode by default.",
+      "background": {
+        "root": "#020021",
+        "rootAlt": "#000000",
+        "usage": "root is primary background, rootAlt is used in gradients for depth"
+      },
+      "text": {
+        "primary": "#FFFFFF",
+        "secondary": "#C4CCD8",
+        "onAccent": "#000000",
+        "usage": "primary for headings/important text, secondary for descriptions/metadata, onAccent for text on yellow accent buttons"
+      },
+      "accent": {
+        "brandBlue": "#0090DE",
+        "brandBlueDark": "#006CA7",
+        "brandYellow": "#FFF310",
+        "brandRed": "#EA1C1B",
+        "usage": "brandYellow is primary accent for buttons/tab bar/progress, brandBlue for interactive elements like DatePicker, brandRed for borders/destructive actions"
+      },
+      "semantic": {
+        "success": "system green",
+        "warning": "system yellow",
+        "error": "system red",
+        "inactive": "system gray",
+        "info": "system blue",
+        "usage": "Use SwiftUI's built-in semantic colors (.green, .yellow, .red, .gray, .blue) for status indicators"
+      }
+    },
+    
+    "typography": {
+      "description": "Font system using SF Pro (system font). All fonts use .system() with specified size and weight.",
+      "scale": {
+        "caption": {
+          "size": 13,
+          "weight": "regular",
+          "usage": "Metadata, timestamps, secondary info, status labels"
+        },
+        "body": {
+          "size": 15,
+          "weight": "regular",
+          "usage": "Descriptions, text fields, general content"
+        },
+        "primaryButtonLabel": {
+          "size": 17,
+          "weight": "bold",
+          "usage": "Primary action buttons, CTAs"
+        },
+        "sectionSubtitle": {
+          "size": 18,
+          "weight": "bold",
+          "usage": "Card titles, section headers, form field labels"
+        }
+      },
+      "implementation": "Font.system(size: [SIZE], weight: .[WEIGHT])"
+    },
+    
+    "spacing": {
+      "description": "Consistent spacing scale using CGFloat values. Used for padding, gaps, and margins.",
+      "scale": {
+        "xs": 4,
+        "s": 8,
+        "m": 12,
+        "l": 16,
+        "xl": 24
+      },
+      "usage_patterns": {
+        "card_internal_padding": "m (12pt)",
+        "vstack_spacing_in_cards": "s (8pt) or xs (4pt) for tight groups",
+        "hstack_spacing": "s (8pt) or m (12pt)",
+        "screen_horizontal_padding": "l (16pt)",
+        "bottom_button_padding": "xl (24pt) horizontal",
+        "between_form_fields": "l (16pt)"
+      }
+    },
+    
+    "corner_radius": {
+      "description": "Border radius scale for rounded corners",
+      "scale": {
+        "s": 6,
+        "m": 7,
+        "l": 10,
+        "xl": 18
+      },
+      "usage_patterns": {
+        "cards": "xl (18pt) - project cards, stage cards, task cards",
+        "input_fields": "m (7pt) - text fields, text editors",
+        "small_elements": "l (10pt) - status badges, tags",
+        "nested_cards": "m (7pt) - cards within cards or forms"
+      }
+    },
+    
+    "shadows": {
+      "description": "Shadow system for depth and elevation",
+      "card": {
+        "color": {
+          "red": 0,
+          "green": 0,
+          "blue": 0,
+          "opacity": 0.45
+        },
+        "radius": 18,
+        "x": 0,
+        "y": 10,
+        "usage": "Standard card shadows for content cards"
+      },
+      "floatingAction": {
+        "color": {
+          "red": 0,
+          "green": 0,
+          "blue": 0,
+          "opacity": 0.55
+        },
+        "radius": 14,
+        "x": 0,
+        "y": 14,
+        "usage": "Floating action buttons, primary CTAs"
+      },
+      "implementation": ".shadow(color: Color(red: R, green: G, blue: B, opacity: O), radius: RADIUS, x: X, y: Y)"
+    },
+    
+    "strokes": {
+      "description": "Border and outline styles",
+      "card_border": {
+        "width": 2,
+        "color_pattern": "statusColor.opacity(0.4)",
+        "usage": "Colored borders on cards matching status/type",
+        "implementation": ".overlay(RoundedRectangle(cornerRadius: RADIUS).stroke(COLOR.opacity(0.4), lineWidth: 2))"
+      },
+      "input_border": {
+        "width": 2,
+        "color": "brandRed with opacity(0.4)",
+        "usage": "Text fields and text editors in forms",
+        "implementation": ".overlay(RoundedRectangle(cornerRadius: RADIUS).stroke(Color.Accent.brandRed.opacity(0.4), lineWidth: 2))"
+      },
+      "thin_accent_border": {
+        "width": 1,
+        "color_pattern": "accentColor.opacity(0.3)",
+        "usage": "Subtle borders on event cards",
+        "implementation": ".overlay(RoundedRectangle(cornerRadius: RADIUS).stroke(COLOR.opacity(0.3), lineWidth: 1))"
+      }
+    },
+    
+    "components": {
+      "description": "Common UI component patterns and their specifications",
+      
+      "cards": {
+        "description": "Content cards are the primary container pattern",
+        "structure": {
+          "padding": "m (12pt)",
+          "background": "Color.Background.root",
+          "cornerRadius": "xl (18pt)",
+          "border": "2pt stroke with status color at 0.4 opacity",
+          "shadow": "optional cardShadow() modifier"
+        },
+        "content_layout": {
+          "vstack_spacing": "s (8pt)",
+          "header_pattern": "HStack with title on left, status/action on right",
+          "metadata_pattern": "HStack with left-aligned and right-aligned info",
+          "description_spacing": "xs (4pt) top padding before description text"
+        }
+      },
+      
+      "floating_action_button": {
+        "description": "Primary action button, usually at bottom of screen",
+        "structure": {
+          "shape": "Capsule()",
+          "background": "Color.Accent.brandYellow",
+          "height": 55,
+          "horizontal_padding": "xl (24pt)",
+          "content_spacing": "s (8pt) between icon and text",
+          "text_style": "Font.Theme.primaryButtonLabel",
+          "text_color": "Color.Text.onAccent",
+          "icon": "SF Symbol at primaryButtonLabel size",
+          "shadow": "optional floatingAction shadow"
+        }
+      },
+      
+      "status_badge": {
+        "description": "Status indicator with colored dot and label",
+        "structure": {
+          "layout": "HStack with 2pt spacing",
+          "dot": "Circle() with 10pt height, filled with status color",
+          "label": "Font.Theme.caption with Color.Text.secondary"
+        }
+      },
+      
+      "status_tag": {
+        "description": "Pill-shaped status indicator with icon and text",
+        "structure": {
+          "layout": "HStack with xs (4pt) spacing",
+          "padding": "horizontal: s (8pt), vertical: xs (4pt)",
+          "background": "statusColor.opacity(0.2)",
+          "cornerRadius": "l (10pt)",
+          "icon": "SF Symbol at caption size",
+          "text": "Font.Theme.caption"
+        }
+      },
+      
+      "progress_bar": {
+        "description": "Progress indicator for completion tracking",
+        "structure": {
+          "component": "ProgressView(value:total:)",
+          "tint": "Color.Accent.brandYellow",
+          "placement": "After metadata, before description in cards"
+        }
+      },
+      
+      "input_field": {
+        "description": "Text input field for forms",
+        "structure": {
+          "label": "Font.Theme.sectionSubtitle with Color.Text.secondary, s (8pt) spacing to field",
+          "field_padding": "m (12pt)",
+          "field_height": "30pt for single-line, 100pt for TextEditor",
+          "background": "Color.Background.root",
+          "cornerRadius": "m (7pt)",
+          "border": "2pt brandRed.opacity(0.4) stroke",
+          "font": "Font.Theme.body"
+        }
+      },
+      
+      "tab_bar": {
+        "description": "Bottom tab navigation",
+        "structure": {
+          "component": "TabView",
+          "tint": "Color.Accent.brandYellow",
+          "item_icon": "SF Symbols",
+          "item_label": "Text label"
+        }
+      },
+      
+      "step_indicator": {
+        "description": "Multi-step flow progress indicator",
+        "structure": {
+          "layout": "HStack of Capsules with s (8pt) spacing",
+          "capsule_height": 4,
+          "active_color": "Color.Accent.brandYellow",
+          "inactive_color": "Color.gray.opacity(0.3)",
+          "padding": "l (16pt) horizontal, m (12pt) top"
+        }
+      }
+    },
+    
+    "layouts": {
+      "description": "Screen layout patterns and structure",
+      
+      "screen_background": {
+        "type": "LinearGradient",
+        "colors": ["Color.Background.root", "Color.Background.rootAlt", "Color.Background.root"],
+        "startPoint": "top",
+        "endPoint": "bottom",
+        "modifier": ".ignoresSafeArea()",
+        "implementation": "Use .mainBackground() custom modifier"
+      },
+      
+      "navigation_bar": {
+        "title_display_mode": "inline",
+        "toolbar_items": {
+          "cancellation_action": "Cancel button on leading side",
+          "confirmation_action": "Done/Save button on trailing side"
+        }
+      },
+      
+      "content_padding": {
+        "screen_edges": "l (16pt) horizontal",
+        "scrollable_content": "Safe area respected",
+        "bottom_cta": "System padding + optional xl (24pt) horizontal"
+      },
+      
+      "list_spacing": {
+        "between_items": "m (12pt) in VStacks or LazyVStacks",
+        "section_spacing": "l (16pt) between major sections"
+      }
+    },
+    
+    "icons": {
+      "description": "SF Symbols usage patterns",
+      "system": "SF Symbols",
+      "sizing": "Match font size - use .font() modifier with theme font",
+      "coloring": "Match semantic meaning - status colors, accent colors, or text colors",
+      "common_symbols": {
+        "navigation": {
+          "projects": "square.3.stack.3d",
+          "calendar": "calendar",
+          "statistics": "chart.bar"
+        },
+        "actions": {
+          "add": "plus or plus.circle.fill",
+          "remove": "xmark.circle.fill",
+          "checkmark": "checkmark.circle.fill",
+          "incomplete": "circle"
+        },
+        "status": {
+          "on_time": "checkmark.circle",
+          "late": "clock.badge.exclamationmark",
+          "early": "bolt.circle",
+          "deadline": "flag.fill",
+          "alert": "exclamationmark.circle.fill"
+        }
+      }
+    },
+    
+    "interactions": {
+      "description": "Interaction patterns and states",
+      
+      "button_style": {
+        "primary_cta": "Custom capsule button with yellow background",
+        "secondary_action": ".buttonStyle(.plain) for custom buttons",
+        "destructive": "brandRed color for icon/text"
+      },
+      
+      "disabled_state": {
+        "button": ".disabled() modifier - system handles visual state",
+        "opacity": "System default disabled appearance"
+      },
+      
+      "tappable_areas": {
+        "minimum_size": "44x44pt touch target (iOS HIG)",
+        "cards": "Entire card is often tappable via NavigationLink"
+      },
+      
+      "focus_management": {
+        "keyboard": "@FocusState for form field management",
+        "dismiss": "Tap background to dismiss keyboard using .onTapGesture on contentShape(Rectangle())"
+      }
+    },
+    
+    "animations": {
+      "description": "Subtle, system-standard animations",
+      "approach": "Use default SwiftUI animations",
+      "transitions": "System default",
+      "note": "No custom animation timing observed - rely on SwiftUI defaults"
+    },
+    
+    "accessibility": {
+      "description": "Accessibility considerations built into design",
+      "dynamic_type": "All text uses .font() with system fonts - supports Dynamic Type automatically",
+      "contrast": "High contrast with white text on dark background",
+      "semantic_colors": "System colors for status indicators support accessibility settings"
+    },
+    
+    "implementation_notes": {
+      "description": "Technical implementation guidelines for recreating this design",
+      
+      "file_structure": {
+        "design_tokens": "Create DesignTokens.swift enum with nested Spacing, CornerRadius, Shadow enums",
+        "color_extensions": "Extend Color with nested Background, Text, Accent enums, add hex initializer",
+        "font_extensions": "Extend Font with Theme enum containing static font properties",
+        "view_extensions": "Create custom view modifiers: mainBackground(), cardShadow()"
+      },
+      
+      "color_implementation": {
+        "hex_support": "Add Color(hex: String) initializer to parse hex colors",
+        "nested_enums": "Use nested enums for organized color access: Color.Background.root"
+      },
+      
+      "reusable_modifiers": [
+        {
+          "name": "mainBackground()",
+          "purpose": "Apply gradient background to screens",
+          "usage": ".mainBackground()"
+        },
+        {
+          "name": "cardShadow()",
+          "purpose": "Apply standard card shadow",
+          "usage": ".cardShadow()"
+        }
+      ],
+      
+      "key_patterns": [
+        "All cards: VStack with s/xs spacing, m padding, xl cornerRadius, 2pt status-colored stroke",
+        "Form fields: Label above field, s spacing, m cornerRadius, brandRed stroke",
+        "Status indicators: Small colored circle + caption text",
+        "CTAs: Yellow capsule buttons at bottom with xl horizontal padding",
+        "Metadata: caption font with secondary text color",
+        "Titles: sectionSubtitle font with primary text color",
+        "Progress: Yellow-tinted ProgressView between metadata and description"
+      ],
+      
+      "dos_and_donts": {
+        "do": [
+          "Use design tokens for all spacing, corner radius, colors",
+          "Apply consistent padding (m for cards, l for screen edges)",
+          "Use HStack for left/right aligned content",
+          "Apply status colors to borders and status indicators",
+          "Use yellow as primary accent for actions and progress",
+          "Keep shadows subtle with proper opacity",
+          "Use SF Symbols for all icons",
+          "Let SwiftUI handle default animations and transitions"
+        ],
+        "dont": [
+          "Hardcode spacing or color values directly in views",
+          "Mix different corner radius sizes on same component",
+          "Use bright colors on dark background without proper contrast",
+          "Create custom button shapes when Capsule or system styles work",
+          "Overcomplicate layouts - prefer simple VStack/HStack",
+          "Add excessive animations or transitions",
+          "Use custom fonts - stick to SF Pro (system)",
+          "Forget stroke overlays on cards - they're part of the style"
+        ]
+      }
+    },
+    
+    "quick_start_template": {
+      "description": "Minimal code template to implement this design system",
+      "files_to_create": [
+        "Utilities/Design/DesignTokens.swift",
+        "Utilities/Design/Color+Theme.swift",
+        "Utilities/Design/Font+Theme.swift",
+        "Utilities/View+Extensions.swift"
+      ],
+      "example_component": {
+        "description": "Standard card component following all patterns",
+        "code_pattern": "VStack(alignment: .leading, spacing: DesignTokens.Spacing.s) { /* content */ }.padding(DesignTokens.Spacing.m).background(Color.Background.root).cornerRadius(DesignTokens.CornerRadius.xl).overlay(RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.xl).stroke(statusColor.opacity(0.4), lineWidth: 2))"
+      }
+    }
+  }
+}
