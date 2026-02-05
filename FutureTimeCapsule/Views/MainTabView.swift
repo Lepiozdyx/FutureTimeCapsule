@@ -7,24 +7,25 @@ struct MainTabView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            TabView(selection: $selectedTab) {
-                SealedCapsulesView(showCreateSheet: $showCreateSheet)
-                    .tag(0)
-                
-                OpenedCapsulesView(showCreateSheet: $showCreateSheet)
-                    .tag(1)
-                
-                StatsView(showCreateSheet: $showCreateSheet)
-                    .tag(2)
+            Group {
+                switch selectedTab {
+                case 0:
+                    SealedCapsulesView(showCreateSheet: $showCreateSheet)
+                case 1:
+                    OpenedCapsulesView(showCreateSheet: $showCreateSheet)
+                case 2:
+                    StatsView(showCreateSheet: $showCreateSheet)
+                default:
+                    SealedCapsulesView(showCreateSheet: $showCreateSheet)
+                }
             }
-            .tabViewStyle(.automatic)
-            .toolbar(.hidden, for: .tabBar)
             
             CustomTabBar(selectedTab: $selectedTab)
         }
         .background(Constants.Colors.background.ignoresSafeArea())
         .sheet(isPresented: $showCreateSheet) {
             CreateCapsuleView()
+                .presentationDragIndicator(.visible)
         }
     }
 }
@@ -35,7 +36,7 @@ struct CustomTabBar: View {
     var body: some View {
         HStack(spacing: 0) {
             TabBarItem(
-                icon: "capsule.fill",
+                icon: "pill.fill",
                 title: "Sealed",
                 isSelected: selectedTab == 0,
                 color: Constants.Colors.blue
@@ -44,10 +45,10 @@ struct CustomTabBar: View {
             }
             
             TabBarItem(
-                icon: "capsule.portrait.fill",
+                icon: "pill",
                 title: "Opened",
                 isSelected: selectedTab == 1,
-                color: Constants.Colors.pink
+                color: Constants.Colors.blue
             ) {
                 selectedTab = 1
             }
@@ -56,14 +57,13 @@ struct CustomTabBar: View {
                 icon: "chart.bar.fill",
                 title: "Stats",
                 isSelected: selectedTab == 2,
-                color: Constants.Colors.yellow
+                color: Constants.Colors.blue
             ) {
                 selectedTab = 2
             }
         }
-        .frame(height: 80)
+        .frame(height: 60)
         .background(Constants.Colors.pink)
-        .clipShape(RoundedRectangle(cornerRadius: 0))
     }
 }
 
@@ -78,12 +78,12 @@ struct TabBarItem: View {
         Button(action: action) {
             VStack(spacing: Constants.Spacing.xs) {
                 Image(systemName: icon)
-                    .font(.system(size: 24))
-                    .foregroundStyle(isSelected ? color : .white.opacity(0.6))
+                    .font(Constants.Fonts.largeTitle)
+                    .foregroundStyle(isSelected ? color : Constants.Colors.yellow.opacity(0.9))
                 
                 Text(title)
                     .font(Constants.Fonts.caption)
-                    .foregroundStyle(isSelected ? color : .white.opacity(0.6))
+                    .foregroundStyle(isSelected ? color : Constants.Colors.yellow.opacity(0.9))
             }
             .frame(maxWidth: .infinity)
         }
