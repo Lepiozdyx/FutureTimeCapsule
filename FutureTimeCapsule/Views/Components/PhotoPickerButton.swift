@@ -18,16 +18,19 @@ struct PhotoPickerButton: View {
                             selectedImage = nil
                         } label: {
                             Image(systemName: "xmark.circle.fill")
-                                .font(.title2)
-                                .foregroundStyle(.white)
+                                .font(Constants.Fonts.title)
+                                .foregroundStyle(Constants.Colors.pink)
                                 .background(
                                     Circle()
-                                        .fill(Constants.Colors.pink)
-                                        .frame(width: 28, height: 28)
+                                        .fill(.white)
+                                        .frame(height: 10)
                                 )
                         }
-                        .offset(x: 10, y: -10)
                     }
+                    .overlay(
+                        Circle()
+                            .stroke(Constants.Colors.pink, lineWidth: 1)
+                    )
             } else {
                 PhotosPicker(selection: $photoItem, matching: .images) {
                     VStack(spacing: Constants.Spacing.s) {
@@ -42,6 +45,10 @@ struct PhotoPickerButton: View {
                     .frame(width: Constants.Components.photoFrameSize, height: Constants.Components.photoFrameSize)
                     .background(Constants.Colors.blue)
                     .clipShape(Circle())
+                    .overlay(
+                        Circle()
+                            .stroke(Constants.Colors.pink, lineWidth: 1)
+                    )
                 }
             }
         }
@@ -52,6 +59,34 @@ struct PhotoPickerButton: View {
                     selectedImage = image
                 }
             }
+        }
+    }
+}
+
+#Preview {
+    VStack {
+        PhotoPickerButtonPreview()
+        PhotoPickerButtonPreview(hasImage: true)
+    }
+}
+
+private struct PhotoPickerButtonPreview: View {
+    @State private var selectedImage: UIImage?
+    let hasImage: Bool
+    
+    init(hasImage: Bool = false) {
+        self.hasImage = hasImage
+        if hasImage {
+            _selectedImage = State(initialValue: .logoicon)
+        }
+    }
+    
+    var body: some View {
+        ZStack {
+            Constants.Colors.background
+                .ignoresSafeArea()
+            
+            PhotoPickerButton(selectedImage: $selectedImage)
         }
     }
 }
