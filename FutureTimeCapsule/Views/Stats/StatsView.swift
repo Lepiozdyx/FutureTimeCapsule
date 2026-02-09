@@ -157,7 +157,7 @@ struct StatsView: View {
                             Image(systemName: "plus")
                             Text("Create")
                         }
-                        .font(Constants.Fonts.headline)
+                        .font(Constants.Fonts.body)
                         .foregroundStyle(.white)
                     }
                 }
