@@ -15,10 +15,10 @@ struct OnboardingView: View {
             .tabViewStyle(.page)
             .ignoresSafeArea(edges: .top)
             
-            Button(
-                currentPage < pages.count - 1
-                ? "Next"
-                : "Get Started"
+            CustomButton(title:
+                            currentPage < pages.count - 1
+                         ? "Next"
+                         : "Get Started"
             ) {
                 if currentPage < pages.count - 1 {
                     withAnimation {
@@ -28,7 +28,7 @@ struct OnboardingView: View {
                     hasCompletedOnboarding = true
                 }
             }
-            .padding(.bottom)
+            .padding([.bottom, .horizontal])
         }
         .background(
             Constants.Colors.background

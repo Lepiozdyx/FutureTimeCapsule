@@ -30,7 +30,7 @@ struct CreateCapsuleView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: Constants.Spacing.l) {
+                VStack(spacing: Constants.Spacing.m) {
                     PhotoPickerButton(selectedImage: $selectedImage)
                         .padding(.top, Constants.Spacing.l)
                     
@@ -91,17 +91,18 @@ struct CreateCapsuleView: View {
                                 Spacer()
                                 
                                 Image(systemName: "chevron.down")
+                                    .font(Constants.Fonts.headline)
                                     .foregroundStyle(.white)
                             }
                             .padding(.horizontal, Constants.Spacing.m)
                             .frame(height: Constants.Components.textFieldSize)
                             .background(
                                 RoundedRectangle(cornerRadius: Constants.CornerRadius.l)
-                                    .fill(Color(hex: "2A1F3D"))
+                                    .fill(Constants.Colors.card)
                             )
                             .overlay(
                                 RoundedRectangle(cornerRadius: Constants.CornerRadius.l)
-                                    .stroke(Constants.Colors.pink, lineWidth: 1.5)
+                                    .stroke(Constants.Colors.pink, lineWidth: 1)
                             )
                         }
                     }
@@ -115,19 +116,19 @@ struct CreateCapsuleView: View {
                             "Select a date",
                             selection: $openDate,
                             in: tomorrow...maxDate,
-                            displayedComponents: .date
-                        )
+                            displayedComponents: .date                        )
                         .datePickerStyle(.compact)
+//                        .labelsHidden()
                         .tint(Constants.Colors.pink)
                         .padding(.horizontal, Constants.Spacing.m)
                         .frame(height: Constants.Components.textFieldSize)
                         .background(
                             RoundedRectangle(cornerRadius: Constants.CornerRadius.l)
-                                .fill(Color(hex: "2A1F3D"))
+                                .fill(Constants.Colors.card)
                         )
                         .overlay(
                             RoundedRectangle(cornerRadius: Constants.CornerRadius.l)
-                                .stroke(Constants.Colors.pink, lineWidth: 1.5)
+                                .stroke(Constants.Colors.pink, lineWidth: 1)
                         )
                     }
                     
@@ -141,6 +142,8 @@ struct CreateCapsuleView: View {
                 .padding(.horizontal, Constants.Spacing.m)
                 .padding(.bottom, Constants.Spacing.xl)
             }
+            .contentMargins(.bottom, 60, for: .scrollContent)
+            .scrollIndicators(.hidden)
             .background(Constants.Colors.background.ignoresSafeArea())
             .navigationTitle("Create Time Capsule")
             .navigationBarTitleDisplayMode(.inline)
