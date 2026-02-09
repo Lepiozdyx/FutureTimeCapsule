@@ -12,10 +12,8 @@ struct ContentView: View {
     var body: some View {
         if hasCompletedOnboarding {
             MainTabView()
-                .preferredColorScheme(.dark)
         } else {
             OnboardingView()
-                .preferredColorScheme(.dark)
         }
     }
 }

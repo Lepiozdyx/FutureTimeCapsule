@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyC6XIou54ZQM04vWFRqrA3q_Y3YXMr3xWk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1039184212348</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.futurecapsule.time</string>
+	<key>PROJECT_ID</key>
+	<string>future-time-capsule</string>
+	<key>STORAGE_BUCKET</key>
+	<string>future-time-capsule.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1039184212348:ios:6929bf3e7de928f189f4f9</string>
+</dict>
+</plist>
