@@ -28,7 +28,7 @@ struct OpenedCapsulesView: View {
                             }
                         }
                         .padding(.horizontal, Constants.Spacing.s)
-                        .padding(.vertical, Constants.Spacing.s)
+                        .padding(.vertical, Constants.Spacing.m)
                     }
                     .scrollIndicators(.hidden)
                     .contentMargins(.bottom, 60, for: .scrollContent)
