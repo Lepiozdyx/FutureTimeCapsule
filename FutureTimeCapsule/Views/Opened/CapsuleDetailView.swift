@@ -56,17 +56,11 @@ struct CapsuleDetailView: View {
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, Constants.Spacing.m)
                         
-                        HStack(spacing: Constants.Spacing.m) {
-                            ZStack {
-                                Circle()
-                                    .fill(capsule.dreamType.color)
-                                    .frame(width: 50, height: 50)
-                                
-                                Image(capsule.dreamType.iconName)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 25, height: 25)
-                            }
+                        HStack(spacing: Constants.Spacing.s) {
+                            Image(capsule.dreamType.iconName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: Constants.Components.iconSize)
                             
                             VStack(alignment: .leading, spacing: Constants.Spacing.xs) {
                                 Text("Created: \(dateFormatter.string(from: capsule.createdDate))")
@@ -94,7 +88,7 @@ struct CapsuleDetailView: View {
                         .padding(.vertical, Constants.Spacing.m)
                         .background(
                             RoundedRectangle(cornerRadius: Constants.CornerRadius.l)
-                                .fill(Color(hex: "2A1F3D"))
+                                .fill(Constants.Colors.card)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: Constants.CornerRadius.l)
                                         .stroke(Constants.Colors.pink, lineWidth: 1)
@@ -116,13 +110,14 @@ struct CapsuleDetailView: View {
                                         Text(status.displayName)
                                             .font(Constants.Fonts.body)
                                     }
+                                    .font(Constants.Fonts.headline)
                                     .foregroundStyle(status == .fulfilled ? Constants.Colors.green : .red)
                                     
                                     Button {
                                         toggleStatus()
                                     } label: {
                                         Image(systemName: "arrow.clockwise.circle.fill")
-                                            .font(.title3)
+                                            .font(Constants.Fonts.headline)
                                             .foregroundStyle(Constants.Colors.pink)
                                     }
                                 }
@@ -138,6 +133,7 @@ struct CapsuleDetailView: View {
                                             Text("Fulfilled")
                                                 .font(Constants.Fonts.body)
                                         }
+                                        .font(Constants.Fonts.headline)
                                         .foregroundStyle(.white)
                                         .frame(maxWidth: .infinity)
                                         .padding(.vertical, Constants.Spacing.m)
@@ -153,6 +149,7 @@ struct CapsuleDetailView: View {
                                             Text("Not Fulfilled")
                                                 .font(Constants.Fonts.body)
                                         }
+                                        .font(Constants.Fonts.headline)
                                         .foregroundStyle(.white)
                                         .frame(maxWidth: .infinity)
                                         .padding(.vertical, Constants.Spacing.m)
@@ -166,7 +163,7 @@ struct CapsuleDetailView: View {
                         .padding(.vertical, Constants.Spacing.m)
                         .background(
                             RoundedRectangle(cornerRadius: Constants.CornerRadius.l)
-                                .fill(Color(hex: "2A1F3D"))
+                                .fill(Constants.Colors.card)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: Constants.CornerRadius.l)
                                         .stroke(Constants.Colors.pink, lineWidth: 1)
@@ -221,4 +218,40 @@ struct ShareSheet: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+}
+
+#Preview {
+    NavigationStack {
+        CapsuleDetailViewPreview(hasFulfillmentStatus: false)
+    }
+}
+
+private struct CapsuleDetailViewPreview: View {
+    let hasFulfillmentStatus: Bool
+    let isFulfilled: Bool
+    let mockCapsuleId = UUID()
+    
+    init(hasFulfillmentStatus: Bool, isFulfilled: Bool = false) {
+        self.hasFulfillmentStatus = hasFulfillmentStatus
+        self.isFulfilled = isFulfilled
+    }
+    
+    var body: some View {
+        CapsuleDetailView(capsuleId: mockCapsuleId)
+            .onAppear {
+                let mockCapsule = FutureCapsule(
+                    id: mockCapsuleId,
+                    title: "My Dream Career",
+                    message: "I want to become a successful iOS developer and create amazing apps that help people in their daily lives.",
+                    imageData: UIImage(systemName: "star.fill")?.pngData(),
+                    dreamType: .dream,
+                    aboutType: .myself,
+                    openDate: Calendar.current.date(byAdding: .month, value: -1, to: Date())!,
+                    createdDate: Calendar.current.date(byAdding: .year, value: -1, to: Date())!,
+                    openedDate: Date(),
+                    fulfillmentStatus: hasFulfillmentStatus ? (isFulfilled ? .fulfilled : .notFulfilled) : nil
+                )
+                StorageManager.shared.addCapsule(mockCapsule)
+            }
+    }
 }

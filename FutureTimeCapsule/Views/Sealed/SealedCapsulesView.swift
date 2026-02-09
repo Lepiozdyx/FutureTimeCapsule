@@ -4,10 +4,7 @@ struct SealedCapsulesView: View {
     @Binding var showCreateSheet: Bool
     @State private var storageManager = StorageManager.shared
     
-    private let columns = [
-        GridItem(.flexible(), spacing: Constants.Spacing.m),
-        GridItem(.flexible(), spacing: Constants.Spacing.m)
-    ]
+    private let columns = Array(repeating: GridItem(.flexible(), spacing: Constants.Spacing.m), count: 2)
     
     private var hasReadyToOpen: Bool {
         storageManager.sealedCapsules.contains { $0.isReadyToOpen }
@@ -21,13 +18,14 @@ struct SealedCapsulesView: View {
                 VStack(spacing: Constants.Spacing.m) {
                     if hasReadyToOpen {
                         InfoBanner(message: "The time has come. Open your capsule.")
-                            .padding(.top, Constants.Spacing.s)
+                            .offset(y: -10)
                     }
                     
                     if storageManager.sealedCapsules.isEmpty {
                         Spacer()
                         EmptyStateView(
-                            message: "No sealed capsules yet.\nCreate your first time capsule!"
+                            title: "No sealed capsules yet.", 
+                            subtitle: "Create your first time capsule!"
                         )
                         Spacer()
                     } else {
@@ -37,9 +35,11 @@ struct SealedCapsulesView: View {
                                     CapsuleCardView(capsule: capsule)
                                 }
                             }
-                            .padding(.horizontal, Constants.Spacing.m)
-                            .padding(.vertical, Constants.Spacing.m)
+                            .padding(.horizontal, Constants.Spacing.s)
+                            .padding(.vertical, Constants.Spacing.s)
                         }
+                        .scrollIndicators(.hidden)
+                        .contentMargins(.bottom, 60, for: .scrollContent)
                     }
                 }
             }
@@ -57,7 +57,7 @@ struct SealedCapsulesView: View {
                             Image(systemName: "plus")
                             Text("Create")
                         }
-                        .font(Constants.Fonts.headline)
+                        .font(Constants.Fonts.body)
                         .foregroundStyle(.white)
                     }
                 }
@@ -66,14 +66,46 @@ struct SealedCapsulesView: View {
     }
 }
 
-struct EmptyStateView: View {
-    let message: String
+#Preview {
+    SealedCapsulesViewPreview(isEmpty: false)
+}
+
+private struct SealedCapsulesViewPreview: View {
+    @State private var showCreateSheet = false
+    let isEmpty: Bool
     
     var body: some View {
-        Text(message)
-            .font(Constants.Fonts.body)
-            .foregroundStyle(.white.opacity(0.6))
-            .multilineTextAlignment(.center)
-            .padding(.horizontal, Constants.Spacing.xl)
+        SealedCapsulesView(showCreateSheet: $showCreateSheet)
+            .onAppear {
+                if !isEmpty {
+                    let mockCapsules = [
+                        FutureCapsule(
+                            title: "My Dream",
+                            message: "Become an iOS developer",
+                            imageData: nil,
+                            dreamType: .dream,
+                            aboutType: .myself,
+                            openDate: Calendar.current.date(byAdding: .month, value: 6, to: Date())!
+                        ),
+                        FutureCapsule(
+                            title: "Love Goal",
+                            message: "Find true love",
+                            imageData: nil,
+                            dreamType: .love,
+                            aboutType: .partner,
+                            openDate: Calendar.current.date(byAdding: .year, value: 1, to: Date())!
+                        ),
+                        FutureCapsule(
+                            title: "Ready Capsule",
+                            message: "This is ready to open",
+                            imageData: nil,
+                            dreamType: .goal,
+                            aboutType: .myself,
+                            openDate: Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+                        )
+                    ]
+                    mockCapsules.forEach { StorageManager.shared.addCapsule($0) }
+                }
+            }
     }
 }

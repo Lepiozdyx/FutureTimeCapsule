@@ -165,3 +165,62 @@ struct StatsView: View {
         }
     }
 }
+
+#Preview {
+    StatsViewPreview()
+}
+
+private struct StatsViewPreview: View {
+    @State private var showCreateSheet = false
+    
+    var body: some View {
+        StatsView(showCreateSheet: $showCreateSheet)
+            .onAppear {
+                let mockCapsules = [
+                    FutureCapsule(
+                        title: "Dream 2023",
+                        message: "My dream from 2023",
+                        imageData: nil,
+                        dreamType: .dream,
+                        aboutType: .myself,
+                        openDate: Calendar.current.date(byAdding: .year, value: -2, to: Date())!,
+                        createdDate: Calendar.current.date(byAdding: .year, value: -3, to: Date())!,
+                        openedDate: Calendar.current.date(byAdding: .year, value: -2, to: Date())!,
+                        fulfillmentStatus: .fulfilled
+                    ),
+                    FutureCapsule(
+                        title: "Goal 2024",
+                        message: "My goal from 2024",
+                        imageData: nil,
+                        dreamType: .goal,
+                        aboutType: .myself,
+                        openDate: Calendar.current.date(byAdding: .year, value: -1, to: Date())!,
+                        createdDate: Calendar.current.date(byAdding: .year, value: -2, to: Date())!,
+                        openedDate: Calendar.current.date(byAdding: .year, value: -1, to: Date())!,
+                        fulfillmentStatus: .fulfilled
+                    ),
+                    FutureCapsule(
+                        title: "Love 2025",
+                        message: "My love goal from 2025",
+                        imageData: nil,
+                        dreamType: .love,
+                        aboutType: .partner,
+                        openDate: Calendar.current.date(byAdding: .month, value: -1, to: Date())!,
+                        createdDate: Calendar.current.date(byAdding: .year, value: -1, to: Date())!,
+                        openedDate: Date(),
+                        fulfillmentStatus: .notFulfilled
+                    ),
+                    FutureCapsule(
+                        title: "Future 2026",
+                        message: "Sealed for future",
+                        imageData: nil,
+                        dreamType: .growth,
+                        aboutType: .myself,
+                        openDate: Calendar.current.date(byAdding: .month, value: 6, to: Date())!,
+                        createdDate: Date()
+                    )
+                ]
+                mockCapsules.forEach { StorageManager.shared.addCapsule($0) }
+            }
+    }
+}

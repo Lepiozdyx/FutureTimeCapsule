@@ -11,17 +11,11 @@ struct CapsuleCardView: View {
     }
     
     var body: some View {
-        VStack(spacing: Constants.Spacing.s) {
-            ZStack {
-                Circle()
-                    .fill(capsule.dreamType.color)
-                    .frame(width: Constants.Components.iconSize, height: Constants.Components.iconSize)
-                
-                Image(capsule.dreamType.iconName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 30, height: 30)
-            }
+        VStack(spacing: Constants.Spacing.xs) {
+            Image(capsule.dreamType.iconName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: Constants.Components.iconSize)
             
             Text(capsule.title)
                 .font(Constants.Fonts.headline)
@@ -47,18 +41,48 @@ struct CapsuleCardView: View {
                         .padding(.horizontal, Constants.Spacing.m)
                         .padding(.vertical, Constants.Spacing.xs)
                         .background(Constants.Colors.pink)
-//                        .clipShape(Capsule())
+                        .clipShape(Capsule())
                 }
-                .padding(.top, Constants.Spacing.xs)
             }
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, Constants.Spacing.m)
     }
     
     private func openCapsule() {
         var updatedCapsule = capsule
         updatedCapsule.openedDate = Date()
         storageManager.updateCapsule(updatedCapsule)
+    }
+}
+
+#Preview("Sealed Capsule") {
+    ZStack {
+        Constants.Colors.background
+            .ignoresSafeArea()
+        
+        CapsuleCardView(capsule: FutureCapsule(
+            title: "My Dream",
+            message: "I want to become a successful iOS developer",
+            imageData: nil,
+            dreamType: .dream,
+            aboutType: .myself,
+            openDate: Calendar.current.date(byAdding: .month, value: 6, to: Date())!
+        ))
+    }
+}
+
+#Preview("Ready to Open") {
+    ZStack {
+        Constants.Colors.background
+            .ignoresSafeArea()
+        
+        CapsuleCardView(capsule: FutureCapsule(
+            title: "Learn SwiftUI",
+            message: "Master SwiftUI in 6 months",
+            imageData: nil,
+            dreamType: .goal,
+            aboutType: .myself,
+            openDate: Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        ))
     }
 }

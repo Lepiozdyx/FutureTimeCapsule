@@ -10,17 +10,11 @@ struct OpenedCapsuleCardView: View {
     }
     
     var body: some View {
-        VStack(spacing: Constants.Spacing.s) {
-            ZStack {
-                Circle()
-                    .fill(capsule.dreamType.color)
-                    .frame(width: Constants.Components.iconSize, height: Constants.Components.iconSize)
-                
-                Image(capsule.dreamType.iconName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 30, height: 30)
-            }
+        VStack(spacing: Constants.Spacing.xs) {
+            Image(capsule.dreamType.iconName)
+                .resizable()
+                .scaledToFit()
+                .frame(height: Constants.Components.iconSize)
             
             Text(capsule.title)
                 .font(Constants.Fonts.headline)
@@ -52,6 +46,59 @@ struct OpenedCapsuleCardView: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, Constants.Spacing.m)
+    }
+}
+
+#Preview("Fulfilled") {
+    ZStack {
+        Constants.Colors.background
+            .ignoresSafeArea()
+        
+        OpenedCapsuleCardView(capsule: FutureCapsule(
+            title: "My Dream",
+            message: "Become a successful developer",
+            imageData: nil,
+            dreamType: .dream,
+            aboutType: .myself,
+            openDate: Calendar.current.date(byAdding: .month, value: -1, to: Date())!,
+            openedDate: Date(),
+            fulfillmentStatus: .fulfilled
+        ))
+    }
+}
+
+#Preview("Not Fulfilled") {
+    ZStack {
+        Constants.Colors.background
+            .ignoresSafeArea()
+        
+        OpenedCapsuleCardView(capsule: FutureCapsule(
+            title: "Learn Piano",
+            message: "Master piano in one year",
+            imageData: nil,
+            dreamType: .goal,
+            aboutType: .myself,
+            openDate: Calendar.current.date(byAdding: .year, value: -1, to: Date())!,
+            openedDate: Date(),
+            fulfillmentStatus: .notFulfilled
+        ))
+    }
+}
+
+#Preview("No Status") {
+    ZStack {
+        Constants.Colors.background
+            .ignoresSafeArea()
+        
+        OpenedCapsuleCardView(capsule: FutureCapsule(
+            title: "Family Love",
+            message: "Spend more time with family",
+            imageData: nil,
+            dreamType: .love,
+            aboutType: .parent,
+            openDate: Calendar.current.date(byAdding: .month, value: -3, to: Date())!,
+            openedDate: Date(),
+            fulfillmentStatus: nil
+        ))
     }
 }
