@@ -34,8 +34,7 @@ struct Constants {
         static let blue = Color(hex: "0033FF")
         static let green = Color(hex: "4AE800")
         
-        static let card = Color(hex: "FAFAFA")
-        static let cardSecondary = Color(hex: "E2E2E2")
+        static let card = Color(hex: "220C39")
         
         static let primary = Color.primary
         static let secondary = Color.secondary

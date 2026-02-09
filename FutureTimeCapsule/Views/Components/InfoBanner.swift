@@ -12,6 +12,9 @@ struct InfoBanner: View {
             .frame(maxWidth: .infinity)
             .background(Constants.Colors.blue)
             .clipShape(RoundedRectangle(cornerRadius: Constants.CornerRadius.l))
-            .padding(.horizontal, Constants.Spacing.m)
     }
+}
+
+#Preview {
+    InfoBanner(message: "The time has come")
 }

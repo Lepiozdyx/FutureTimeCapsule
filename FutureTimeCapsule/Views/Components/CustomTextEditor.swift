@@ -10,9 +10,9 @@ struct CustomTextEditor: View {
             if text.isEmpty {
                 Text(placeholder)
                     .font(Constants.Fonts.body)
-                    .foregroundStyle(.white.opacity(0.5))
+                    .foregroundStyle(.white.opacity(0.3))
                     .padding(.horizontal, Constants.Spacing.m)
-                    .padding(.top, Constants.Spacing.s + 8)
+                    .padding(.top, Constants.Spacing.m)
             }
             
             TextEditor(text: $text)
@@ -30,17 +30,26 @@ struct CustomTextEditor: View {
         .frame(height: Constants.Components.textEditorSize)
         .background(
             RoundedRectangle(cornerRadius: Constants.CornerRadius.l)
-                .fill(Color(hex: "2A1F3D"))
+                .fill(Constants.Colors.card)
         )
         .overlay(
             RoundedRectangle(cornerRadius: Constants.CornerRadius.l)
-                .stroke(Constants.Colors.pink, lineWidth: 1.5)
+                .stroke(Constants.Colors.pink, lineWidth: 1)
         )
         .overlay(alignment: .bottomTrailing) {
             Text("Max \(maxCharacters) chars")
                 .font(Constants.Fonts.caption)
-                .foregroundStyle(.white.opacity(0.6))
+                .foregroundStyle(.white.opacity(0.5))
                 .padding(Constants.Spacing.s)
         }
     }
+}
+
+#Preview {
+    VStack {
+        CustomTextEditor(placeholder: "Placeholder text", text: .constant(""), maxCharacters: 300)
+        
+        CustomTextField(placeholder: "Placeholder", text: .constant(""))
+    }
+    .padding()
 }

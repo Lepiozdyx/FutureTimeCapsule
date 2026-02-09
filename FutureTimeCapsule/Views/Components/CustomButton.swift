@@ -7,7 +7,7 @@ struct CustomButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(Constants.Fonts.headline)
+                .font(Constants.Fonts.largeTitle)
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: Constants.Components.primaryButtonSize)
@@ -15,4 +15,8 @@ struct CustomButton: View {
                 .clipShape(RoundedRectangle(cornerRadius: Constants.CornerRadius.l))
         }
     }
+}
+
+#Preview {
+    CustomButton(title: "Title") {}
 }

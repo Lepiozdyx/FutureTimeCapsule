@@ -12,11 +12,15 @@ struct CustomTextField: View {
             .frame(height: Constants.Components.textFieldSize)
             .background(
                 RoundedRectangle(cornerRadius: Constants.CornerRadius.l)
-                    .fill(Color(hex: "2A1F3D"))
+                    .fill(Constants.Colors.card)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: Constants.CornerRadius.l)
-                    .stroke(Constants.Colors.pink, lineWidth: 1.5)
+                    .stroke(Constants.Colors.pink, lineWidth: 1)
             )
     }
+}
+
+#Preview {
+    CustomTextField(placeholder: "Placeholder", text: .constant(""))
 }
